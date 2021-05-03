@@ -1,0 +1,72 @@
+{%extends 'recipemaker/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{%for rec in recipe%}
+<div class="d-flex justify-content-center">
+    <div class="card mb-3 justify-content-center card text-right" style="width: 80%;">
+        <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src={{ rec.image.url }} alt="" style="max-height: 90%;"/>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+            <h5 class="card-title">Roasted Chicken Breast</h5>
+            <p class="card-text card text-right" >
+                <ul>
+                    <li>Preheat oven to 400 degrees</li>
+                    <li>Place chicken on bed of garlic</li>
+                    <li>Add other ingredients</li>
+                    <li>Roast for 1 hour</li>
+                </ul> 
+            </p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 80%;">
+        <div class="card-body">
+        <h5 class="card-title card text-center">Ingredients</h5>
+        <h6 class="card-subtitle mb-2 text-muted card text-center">2 whole chicken breasts , 4 heads garlic, 8 sprigs fresh oregano, 2 tablespoons olive oil, pepper, salt</h6>
+        <p class="card-text">Preheat oven to 400 degrees. Slice tops from garlic heads, reserving the bottoms; arrange tops, cut sides down, 
+            in the center of an 11-by-17-inch roasting pan. Place 1 sprig of oregano over each garlic top, and arrange chicken breasts over garlic.
+            Place reserved garlic bottoms, cut sides up, next to chicken in the pan. Drizzle chicken and garlic bottoms with the olive oil. Season chicken with salt and pepper; place remaining 4 sprigs of oregano on top. 
+            Roast chicken for 30 minutes; turn garlic bottoms cut sides down, and rotate the pan. Continue roasting chicken until skin is browned, juices run clear, 
+            and an instant-read thermometer inserted into thickest part of the meat registers 165 degrees, about 30 minutes more.   
+        </p>
+        {% csrf_token %}
+        <button style="text-align: center;" class="btn btn-primary" name="add" value="{{rec.name}}">Save recipe</button>
+
+    
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("button").click(function(){
+        var recipe=$('button').val()
+        console.log(recipe)
+        $.ajax({
+            url: '/savedrecipe/',
+            type: "POST",
+            data: {
+                'recipe' : recipe, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            dataType: 'json',
+            success: function(data){
+                $('button').text(data['text']);
+                
+            }
+
+        });
+
+    });
+</script>
+
+  {%endfor%}
+{%endblock%}

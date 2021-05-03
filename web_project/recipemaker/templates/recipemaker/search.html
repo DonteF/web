@@ -1,0 +1,93 @@
+{%extends 'recipemaker/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+<form class="search_search" method="GET" action="{% url 'search' %}">
+    <input class="searchbar" type="text" name="search">
+    <i class="fa fa-search"></i>
+</form>
+       <!-- Topic Cards -->
+    <div id="cards_landscape_wrap-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <a href="{% url recipe1.url %}">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="{{recipe1.image.url}}" alt="" />
+                                </div>
+                                <div class="text-container">
+                                <h6>{{recipe1.name}}</h6>
+                                    <p>{{recipe1.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {%if recipe2 != None%}
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <a href="{% url recipe2.url %}">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="{{recipe2.image.url}}" alt="" />
+                                </div>
+                                <div class="text-container">                                    
+                                    <h6>{{recipe2.name}}</h6>
+                                    <p>{{recipe2.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+                {%if recipe3 != None%}
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                        <a href="{% url recipe3.url %}">
+                            <div class="card-flyer">
+                                <div class="text-box">
+                                    <div class="image-box">
+                                        <img src="{{recipe3.image.url}}" alt="" />
+                                    </div>
+
+                                    <div class="text-container">
+                                        <h6>{{recipe3.name}}</h6>
+                                    <p>{{recipe3.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+                {%if recipe4 != None%}
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+                    <a href="{% url recipe4.url %}">
+                        <div class="card-flyer">
+                            <div class="text-box">
+                                <div class="image-box">
+                                    <img src="{{recipe4.image.url}}" alt="" />
+                                </div>
+                                <div class="text-container">
+                                    <h6>{{recipe4.name}}</h6>
+                                   <p>{{recipe3.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+{%endblock%}

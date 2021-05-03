@@ -1,0 +1,72 @@
+{%extends 'recipemaker/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{%for rec in recipe%}
+<div class="d-flex justify-content-center">
+    <div class="card mb-3 justify-content-center card text-right" style="width: 80%;">
+        <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src={{ rec.image.url }} alt="" style="max-height: 90%;"/>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+            <h5 class="card-title">{{rec.name}}</h5>
+            <p class="card-text card text-right" >
+                <ul>
+                    <li>Preheat oven to 350 degrees</li>
+                    <li>Rub seasoning on pork</li>
+                    <li>Place pork and other ingredients in oven</li>
+                    <li>Roast for 90 minutes</li>
+                </ul> 
+            </p>
+            <p class="card-text"><small class="text-muted"></small></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 80%;">
+        <div class="card-body">
+        <h5 class="card-title card text-center">Ingredients</h5>
+        <h6 class="card-subtitle mb-2 text-muted card text-center">1 boneless pork loin roast, 1 tablespoon extra-virgin olive oil, 2 tablespoons coarse mustard, 4 cups sauerkraut, pepper, salt</h6>
+        <p class="card-text">Preheat the oven to 350°F. Cover a roasting rack with a sheet of aluminum foil, and poke small holes all over with the tip of a sharp knife. 
+            Line a roasting pan with heavy-duty aluminum foil and position the roasting rack inside of it.Pat the pork loin dry with paper towels, and rub with olive oil. Season the pork loin liberally on all sides with salt and black pepper.
+            Use the back of a spoon to spread the mustard in an even layer over the surface of the meat.
+            Place the sauerkraut in an even layer on the foil-covered roasting rack, and center the pork loin on top. Sprinkle the caraway seeds over the pork and sauerkraut.  
+            Roast the pork loin on middle rack of oven until the meat reaches an internal temperature of 138-142°F, 75-90 minutes.    
+        </p>
+        {% csrf_token %}
+        <button style="text-align: center;" class="btn btn-primary" name="add" value="{{rec.name}}">Save recipe</button>
+
+    
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("button").click(function(){
+        var recipe=$('button').val()
+        console.log(recipe)
+        $.ajax({
+            url: '/savedrecipe/',
+            type: "POST",
+            data: {
+                'recipe' : recipe, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            dataType: 'json',
+            success: function(data){
+                $('button').text(data['text']);
+                
+            }
+
+        });
+
+    });
+</script>
+
+  {%endfor%}
+{%endblock%}

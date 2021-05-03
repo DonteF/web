@@ -1,0 +1,74 @@
+{%extends 'recipemaker/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{%for rec in recipe%}
+<div class="d-flex justify-content-center">
+    <div class="card mb-3 justify-content-center card text-right" style="width: 80%;">
+        <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src={{ rec.image.url }} alt="" style="max-height: 90%;"/>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+            <h5 class="card-title">Pot Roast</h5>
+            <p class="card-text card text-right" >
+                <ul style="list-style-type: none;">
+                    <li>Sear meat on all sides</li>
+                    <li>Preset oven to 300</li>
+                    <li>Place all ingredients inside Dutch oven</li>
+                    <li>Cook for 3 hours</li>
+                </ul> 
+            </p>
+            <p class="card-text"><small class="text-muted"></small></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 80%;">
+        <div class="card-body">
+        <h5 class="card-title card text-center">Ingredients</h5>
+        <h6 class="card-subtitle mb-2 text-muted card text-center">4 pounds beef roast, 1 carrot, 1 celery stalk, 1 red onion, 2 garlic cloves, 3 cups red wine</h6>
+        <p class="card-text">Trim some of the fat from the meat. Pat dry with paper towels. Season generously with the salt and pepper. Heat the oil in a large, heavy pot or Dutch oven over medium-high heat.
+            When the oil is hot, shimmering but not smoking, <a href="{% url 'searingvideo' %}">add the roast and cook </a>add the roast and cook, turning it a few times, until it is nicely browned on all sides, 10-12 minutes.Reduce the heat to medium. Add the carrot, celery, and onion. Cook, 
+            stirring occasionally until the vegetables are golden brown and begin to stick to the bottom of the pan, 10-12 minutes.
+            Add the garlic, parsley, and sage, and stir until the herbs are lightly colored and fragrant, about 1 minute.Add 1 cup of the wine and stir quickly, lifting up the richly browned caramelized vegetables that stick to the bottom of the pan.
+            When the wine is almost all evaporated and thickly coats the vegetables, return the meat to the pan and turn it over a few times to coat it with the savory base.
+            put the pot into a 300°F oven and turn the roast every hour.
+            Remove the meat from the pot and place it on a cutting board, covered loosely with aluminum foil. If the sauce is too thin, bring it to a fast boil and reduce it until it has a medium-thick consistency. Taste and adjust seasoning.       
+        </p>
+        {% csrf_token %}
+        <button style="text-align: center;" class="btn btn-primary" name="add" value="pot roast">Save recipe</button>
+
+    
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("button").click(function(){
+        var recipe=$('button').val()
+        console.log(recipe)
+        $.ajax({
+            url: '/savedrecipe/',
+            type: "POST",
+            data: {
+                'recipe' : recipe, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            dataType: 'json',
+            success: function(data){
+                $('button').text(data['text']);
+                
+            }
+
+        });
+
+    });
+</script>
+
+  {%endfor%}
+{%endblock%}

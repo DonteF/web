@@ -1,0 +1,73 @@
+{%extends 'recipemaker/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{%for rec in recipe%}
+<div class="d-flex justify-content-center">
+    <div class="card mb-3 justify-content-center card text-right" style="width: 80%;">
+        <div class="row no-gutters">
+        <div class="col-md-4">
+            <img src={{ rec.image.url }} alt="" style="max-height: 90%;"/>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+            <h5 class="card-title">{{rec.name}}</h5>
+            <p class="card-text card text-right" >
+                <ul style="list-style-type: none;">
+                    <li>Salt the roast</li>
+                    <li>Preheat oven to 250</li>
+                    <li>Sear each side of meat</li>
+                    <li>Roast for 90 minutes</li>
+                </ul> 
+            </p>
+            <p class="card-text"><small class="text-muted"></small></p>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="card" style="width: 80%;">
+        <div class="card-body">
+        <h5 class="card-title card text-center">Ingredients</h5>
+        <h6 class="card-subtitle mb-2 text-muted card text-center">2.5 lb sirloin tip roast, 2 tsp kosher salt or 1 tsp table salt, 1½ tbsp vegetable or olive oil, 2 tsp dried oregano, 3 cloves of garlic, pepper, salt</h6>
+        <p class="card-text">Start off by salting the roast the day before you're going to be cooking it (this will give a more flavorful, evenly salted roast). Evenly rub the salt over the roast,
+             take plastic wrap and tightly wrap it around the roast, then place on a plate/bowl in your refrigerator.
+             The next day, remove the roast about an hour before cooking (allowing it to warm to room temperature).
+             Place your oven rack in the middle and preheat to 250°F. While the oven is preheating, rub your roast with 1/2 a tablespoon of oil and minced garlic, then evenly rub with your spice mixture
+             In a large cast iron pan on medium-high heat with a tablespoon of oil, sear each side of your roast until browned 
+             Cook the roast for about an hour and twenty minutes, or until the meat reaches 115°F on your meat thermometer
+        </p>
+        {% csrf_token %}
+        <button style="text-align: center;" class="btn btn-primary" name="add" value="{{rec.name}}">Save recipe</button>
+
+    
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("button").click(function(){
+        var recipe=$('button').val()
+        console.log(recipe)
+        $.ajax({
+            url: '/savedrecipe/',
+            type: "POST",
+            data: {
+                'recipe' : recipe, 'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val()
+            },
+            dataType: 'json',
+            success: function(data){
+                $('button').text(data['text']);
+                
+            }
+
+        });
+
+    });
+</script>
+
+  {%endfor%}
+{%endblock%}

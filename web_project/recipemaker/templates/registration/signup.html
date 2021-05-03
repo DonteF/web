@@ -1,0 +1,17 @@
+{%extends 'recipemaker/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex justify-content-center" style="height:100%">
+    <div class="card" style="width: 70%; height:60%">
+        <div class="container">
+            <h2>Sign up</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type='submit' class="btn btn-primary">Sign up</button>
+            </form>
+        </div>
+    </div>
+</div>
+{%endblock%}

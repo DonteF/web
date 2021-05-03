@@ -1,0 +1,14 @@
+{%extends 'recipemaker/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<h1 class="home_title">Start Cooking</h1>
+    <form class="home_search" method="GET" action="{% url 'search' %}">
+         <input class="searchbar" type="text" name="search">
+         <i class="fa fa-search"></i>
+    </form>
+    </body>
+
+{%endblock%}
